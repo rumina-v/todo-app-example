@@ -1,5 +1,5 @@
-export type TodoItemType = {
-    id: number;
-    label: string;
-    isChecked: boolean;
+export type Todo = {
+  id: number
+  text: string
+  done: boolean
 }
