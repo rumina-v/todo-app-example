@@ -1,15 +1,20 @@
-import { Button, Card, Result, Tag, Typography } from 'antd'
+import { Alert, Button, Card, Result, Skeleton, Tag, Typography } from 'antd'
 import { useNavigate, useParams } from 'react-router-dom'
-import type { Todo } from '../shared/types'
+import { useTodos } from '../hooks/useTodos'
 
-type TodoDetailsPageProps = {
-  todos: Todo[]
-}
-
-export function TodoDetailsPage({ todos }: TodoDetailsPageProps) {
+export function TodoDetailsPage() {
   const navigate = useNavigate()
   const { id } = useParams()
-  const todo = todos.find((item) => item.id === Number(id))
+  const { todos, isPending, isError, error } = useTodos()
+  const todo = todos.find((item) => String(item.id) === id)
+
+  if (isPending) {
+    return <Skeleton active />
+  }
+
+  if (isError) {
+    return <Alert type="error" showIcon message="Не удалось загрузить задачу" description={error.message} />
+  }
 
   if (!todo) {
     return (

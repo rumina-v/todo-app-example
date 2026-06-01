@@ -1,5 +1,7 @@
+export type TodoId = string | number
+
 export type Todo = {
-  id: number
+  id: TodoId
   text: string
   done: boolean
 }

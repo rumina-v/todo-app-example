@@ -1,12 +1,12 @@
 import { Empty, List } from 'antd'
-import type { Todo } from '../../shared/types'
+import type { Todo, TodoId } from '../../shared/types'
 import { TodoItem } from '../TodoItem/TodoItem'
 
 type TodoListProps = {
   todos: Todo[]
-  onToggle: (id: number) => void
-  onDelete: (id: number) => void
-  onOpen: (id: number) => void
+  onToggle: (id: TodoId) => void
+  onDelete: (id: TodoId) => void
+  onOpen: (id: TodoId) => void
 }
 
 export function TodoList({ todos, onToggle, onDelete, onOpen }: TodoListProps) {

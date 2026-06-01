@@ -1,20 +1,29 @@
-import { Card, Flex, Progress, Typography } from 'antd'
+import { Alert, Card, Flex, Progress, Skeleton, Typography } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { TodoForm } from '../components/TodoForm/TodoForm'
 import { TodoList } from '../components/TodoList/TodoList'
-import type { Todo } from '../shared/types'
+import { useTodos } from '../hooks/useTodos'
 
-type TodoPageProps = {
-  todos: Todo[]
-  onAdd: (text: string) => void
-  onToggle: (id: number) => void
-  onDelete: (id: number) => void
-}
-
-export function TodoPage({ todos, onAdd, onToggle, onDelete }: TodoPageProps) {
+export function TodoPage() {
   const navigate = useNavigate()
+  const { todos, isPending, isError, error, add, toggle, remove } = useTodos()
   const completedCount = todos.filter((todo) => todo.done).length
   const progress = todos.length === 0 ? 0 : Math.round((completedCount / todos.length) * 100)
+
+  if (isPending) {
+    return <Skeleton active />
+  }
+
+  if (isError) {
+    return (
+      <Alert
+        type="error"
+        showIcon
+        message="Не удалось загрузить задачи"
+        description={`${error.message}. Проверьте, запущен ли mock API.`}
+      />
+    )
+  }
 
   return (
     <Card className="todo-card">
@@ -26,11 +35,11 @@ export function TodoPage({ todos, onAdd, onToggle, onDelete }: TodoPageProps) {
           </Typography.Text>
         </div>
         <Progress percent={progress} />
-        <TodoForm onAdd={onAdd} />
+        <TodoForm onAdd={add} />
         <TodoList
           todos={todos}
-          onToggle={onToggle}
-          onDelete={onDelete}
+          onToggle={toggle}
+          onDelete={remove}
           onOpen={(id) => navigate(`/todos/${id}`)}
         />
       </Flex>

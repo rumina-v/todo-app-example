@@ -1,0 +1,20 @@
+{
+  "todos": [
+    {
+      "id": "1",
+      "text": "Разобраться с компонентами и props",
+      "done": true
+    },
+    {
+      "id": "2",
+      "text": "Использовать функциональное обновление state",
+      "done": true
+    },
+    {
+      "id": "3",
+      "text": "Проверить production-сборку",
+      "done": false
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
